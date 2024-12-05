@@ -1,18 +1,19 @@
 import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { Link, Tabs } from 'expo-router';
 import { Pressable } from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof Ionicons>['name'];
   color: string;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <Ionicons size={28} style={{ marginBottom: -3 }} {...props} />;
 }
 
 export default function TabLayout() {
@@ -21,22 +22,25 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
+        tabBarActiveTintColor: 'blue', // Set active tint color to blue
+        tabBarInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault, // Optional: Set inactive color
+        tabBarStyle: {
+          backgroundColor: Colors[colorScheme ?? 'light'].background,
+        },
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerShown: false,
+          title: 'SwiftPay',
+          tabBarIcon: ({ color }) => <TabBarIcon name="logo-skype" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
                 {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
+                  <Ionicons
+                    name="logo-skype"
                     size={25}
                     color={Colors[colorScheme ?? 'light'].text}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
@@ -48,10 +52,36 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="transfer"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerShown: false,
+          title: 'Transfer',
+          tabBarIcon: ({ color }) => <TabBarIcon name="send" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="savings"
+        options={{
+          headerShown: false,
+          title: 'Savings',
+          tabBarIcon: ({ color }) => <TabBarIcon name="wallet" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="bills"
+        options={{
+          headerShown: false,
+          title: 'Bills',
+          tabBarIcon: ({ color }) => <TabBarIcon name="receipt-sharp" color={color} />,
+        }}
+      />
+         
+      <Tabs.Screen
+        name="cards"
+        options={{
+          headerShown: false,
+          title: 'Cards',
+          tabBarIcon: ({ color }) => <TabBarIcon name="card" color={color} />,
         }}
       />
     </Tabs>
